@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CricketScoreBoard.Interfaces;
+using CricketScoreBoard.Services;
 
 namespace CricketScoreBoard
 {
@@ -26,6 +28,10 @@ namespace CricketScoreBoard
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IMatchService, MatchService>();
+            services.AddScoped<ITeamService, TeamService>();
+
+            services.AddSingleton<Repository.Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
