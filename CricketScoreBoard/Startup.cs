@@ -29,7 +29,6 @@ namespace CricketScoreBoard
         {
             services.AddControllers();
             services.AddScoped<IMatchService, MatchService>();
-            services.AddScoped<ITeamService, TeamService>();
 
             services.AddSingleton<Repository.Repository>();
         }

@@ -28,12 +28,6 @@ namespace CricketScoreBoard.Controllers
 
             return Ok(response);
         }
-
-        [HttpPost]
-        public ActionResult SetBattingOrder([FromBody] List<string> playerNames)
-        {
-
-        }
-
+        
     }
 }
