@@ -17,43 +17,50 @@ namespace CricketScoreBoard.Services
             _repository = repository;
         }
 
-        public Match CreateMatch(int noOfPlayers, int noOfOvers, int teamOne, int teamTwo)
+        public Match CreateMatch(int noOfPlayers, int noOfOvers)
         {
             if (_repository.Match != null)
             {
                 throw new CustomException(400, "Match is currently in progress");
             }
 
-            if (_repository.Teams.Any(x => x.TeamId == teamOne) && _repository.Teams.Any(x => x.TeamId == teamTwo))
+            _repository.Match = new Match()
             {
-                _repository.Match = new Match()
-                {
-                    NoOfOvers = noOfOvers,
-                    NoOfPlayers = noOfPlayers,
-                    TeamOneId = teamOne,
-                    TeamTwoId = teamTwo,
-                    MatchId = Guid.NewGuid()
-                };
+                NoOfOvers = noOfOvers,
+                NoOfPlayers = noOfPlayers,
+                MatchId = Guid.NewGuid(),
+            };
 
-                return _repository.Match;
-            }
-
-            throw new CustomException(400, "Team/s does not exist");
+            return _repository.Match;
         }
 
         public void SetBattingOrder(List<string> playerNames)
         {
-            var teamOneBattingPlayers = new List<PlayerBattingData>();
-
-            foreach (var playerName in playerNames)
+            if (_repository.Match != null)
             {
-                var player = _repository.Players.First(x =>
-                    x.Name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase));
-                teamOneBattingPlayers.Add(new PlayerBattingData()
+                _repository.MatchData = new MatchData {MatchReference = _repository.Match.MatchId};
+
+                if (_repository.MatchData.HomeTeam != null)
                 {
-                    PlayerId = player.Id
-                });
+                    _repository.MatchData.HomeTeam = new ScoreCard()
+                    {
+                        BattingCard = new List<PlayerBattingData>()
+                    };
+                }
+                else if (_repository.MatchData.OpponentTeam != null)
+                {
+                    _repository.MatchData.OpponentTeam = new ScoreCard()
+                    {
+                        BattingCard = new List<PlayerBattingData>()
+                    };
+                }
+                else
+                {
+                    throw new CustomException(400, "Both the teams are already set");
+                }
             }
+            
+
         }
 
 

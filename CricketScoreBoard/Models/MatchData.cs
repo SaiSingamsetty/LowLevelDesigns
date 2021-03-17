@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.AccessControl;
 
 namespace CricketScoreBoard.Models
 {
@@ -6,8 +7,8 @@ namespace CricketScoreBoard.Models
     {
         public Guid MatchReference { get; set; }
 
-        public ScoreCard TeamOneCard { get; set; }
+        public ScoreCard HomeTeam { get; set; }
 
-        public ScoreCard TeamTwoCard { get; set; }
+        public ScoreCard OpponentTeam { get; set; }
     }
 }

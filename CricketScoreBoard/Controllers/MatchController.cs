@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CricketScoreBoard.Interfaces;
-using CricketScoreBoard.ViewModels;
+using CricketScoreBoard.Models;
 
 namespace CricketScoreBoard.Controllers
 {
@@ -21,11 +21,9 @@ namespace CricketScoreBoard.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateMatch([FromBody]CreateMatchRequest request)
+        public ActionResult CreateMatch([FromBody]Match request)
         {
-            var response = _matchService.CreateMatch(request.NoOfPlayersInATeam, request.NoOfOvers, request.TeamOneId,
-                request.TeamTwoId);
-
+            var response = _matchService.CreateMatch(request.NoOfPlayers, request.NoOfOvers);
             return Ok(response);
         }
         

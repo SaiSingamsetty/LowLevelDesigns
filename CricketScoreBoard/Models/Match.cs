@@ -12,8 +12,14 @@ namespace CricketScoreBoard.Models
 
         public int NoOfPlayers { get; set; }
 
-        public int TeamOneId { get; set; }
+        public MatchStatus MatchStatus { get; set; }
+    }
 
-        public int TeamTwoId { get; set; }
+    public enum MatchStatus
+    {
+        Scheduled,
+        InProgress,
+        Completed,
+        Cancelled
     }
 }

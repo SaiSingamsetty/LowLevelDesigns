@@ -20,5 +20,7 @@ namespace CricketScoreBoard.Models
         public int Wides { get; set; }
 
         public int NoBalls { get; set; }
+
+        public bool Is { get; set; }
     }
 }
