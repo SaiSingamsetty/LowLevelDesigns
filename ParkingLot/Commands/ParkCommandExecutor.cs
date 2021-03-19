@@ -12,7 +12,7 @@ namespace ParkingLot.Commands
 
         private readonly ParkingLotService _parkingLotService;
 
-        public ParkCommandExecutor(ParkingLotService parkingLotService) : base(parkingLotService)
+        public ParkCommandExecutor(ParkingLotService parkingLotService)
         {
             _parkingLotService = parkingLotService;
         }

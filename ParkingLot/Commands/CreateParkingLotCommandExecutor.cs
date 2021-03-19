@@ -9,10 +9,10 @@ namespace ParkingLot.Commands
 {
     public class CreateParkingLotCommandExecutor : CommandExecutor
     {
-        public static string CommandName = "create_parking_lot";
+        public const string CommandName = "create_parking_lot";
 
         private readonly ParkingLotService _parkingLotService;
-        public CreateParkingLotCommandExecutor(ParkingLotService parkingLotService) : base(parkingLotService)
+        public CreateParkingLotCommandExecutor(ParkingLotService parkingLotService)
         {
             _parkingLotService = parkingLotService;
         }
