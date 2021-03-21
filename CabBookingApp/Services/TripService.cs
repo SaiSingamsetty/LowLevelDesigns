@@ -37,7 +37,7 @@ namespace CabBookingApp.Services
             if (matchedCab == null)
             {
                 //TODO : Exception NOT FOUND
-                throw new Exception();
+                throw new Exception(); 
             }
 
             var price = _pricingStrategy.CalculatePrice(fromPoint, toPoint);
