@@ -26,8 +26,9 @@ namespace CabBookingApp.Controllers
         [HttpPost("register")]
         public ActionResult RegisterRider([FromQuery] string riderName)
         {
-            _riderService.CreateRider(new Rider(riderName));
-            return Ok();
+            var newRider = new Rider(riderName);
+            _riderService.CreateRider(newRider);
+            return Ok(newRider);
         }
 
         [HttpPost("book")]
@@ -40,7 +41,8 @@ namespace CabBookingApp.Controllers
         [HttpGet("{riderId}/history")]
         public ActionResult GetHistoryRides([FromRoute] string riderId)
         {
-            return Ok(_tripService.GetTripHistory(riderId));
+            var history = _tripService.GetTripHistory(riderId);
+            return Ok(history);
         }
     }
 }

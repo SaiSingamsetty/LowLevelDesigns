@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CabBookingApp.Exceptions;
 using CabBookingApp.Models;
 using CabBookingApp.Services;
 
@@ -26,8 +27,16 @@ namespace CabBookingApp.Controllers
         [HttpPost("register")]
         public ActionResult Register([FromQuery] string driverName)
         {
-            _cabService.CreateCab(new Cab(driverName));
-            return Ok();
+            try
+            {
+                var newCab = new Cab(driverName);
+                _cabService.CreateCab(newCab);
+                return Ok(newCab);
+            }
+            catch (CustomException e)
+            {
+                return StatusCode(e.StatusCode, e);
+            }
         }
 
         [HttpPut("{cabId}/location")]
@@ -35,14 +44,14 @@ namespace CabBookingApp.Controllers
             [FromQuery] double newY)
         {
             _cabService.UpdateCabLocation(cabId, new Location(newX, newY));
-            return Ok();
+            return Ok(_cabService.GetCab(cabId));
         }
 
         [HttpPut("{cabId}/availability")]
         public ActionResult UpdateCabAvailability([FromRoute] string cabId, [FromQuery] bool isAvailable)
         {
             _cabService.UpdateCabAvailability(cabId, isAvailable);
-            return Ok();
+            return Ok(_cabService.GetCab(cabId));
         }
 
         [HttpPut("{cabId}/end-trip")]

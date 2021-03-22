@@ -10,9 +10,9 @@ namespace CabBookingApp.Services
 {
     public class TripService
     {
-        private readonly Dictionary<string, List<Trip>> _trips = new Dictionary<string, List<Trip>>();
+        private static readonly Dictionary<string, List<Trip>> Trips = new Dictionary<string, List<Trip>>();
 
-        private static double _maxMatchingDistance = 10;
+        private static double _maxMatchingDistance = 100;
 
         private readonly CabService _cabService;
 
@@ -42,18 +42,23 @@ namespace CabBookingApp.Services
 
             var price = _pricingStrategy.CalculatePrice(fromPoint, toPoint);
             var newTrip = new Trip(matchedCab, rider, price, fromPoint, toPoint);
-            if (!_trips.ContainsKey(rider.Id))
+            if (!Trips.ContainsKey(rider.Id))
             {
-                _trips.Add(rider.Id, new List<Trip>());
+                Trips.Add(rider.Id, new List<Trip>());
             }
             
-            _trips[rider.Id].Add(newTrip);
+            Trips[rider.Id].Add(newTrip);
             matchedCab.CurrentTrip = newTrip;
         }
 
         public List<Trip> GetTripHistory(string riderId)
         {
-            return _trips[riderId];
+            if (!Trips.ContainsKey(riderId))
+            {
+                throw new CustomException("NO_TRIPS_FOUND", 400);
+            }
+
+            return Trips[riderId];
         }
 
         public void FinishTrip(Cab cab)

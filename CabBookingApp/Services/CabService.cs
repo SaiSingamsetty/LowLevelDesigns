@@ -6,53 +6,53 @@ namespace CabBookingApp.Services
 {
     public class CabService
     {
-        private readonly Dictionary<string, Cab> _cabs = new Dictionary<string, Cab>();
+        private static readonly Dictionary<string, Cab> Cabs = new Dictionary<string, Cab>();
 
         public void CreateCab(Cab cab)
         {
-            if (_cabs.ContainsKey(cab.Id))
+            if (Cabs.ContainsKey(cab.Id))
             {
                 throw new CustomException("CAB_ALREADY_EXISTS", 409);
             }
 
-            _cabs.Add(cab.Id, cab);
+            Cabs.Add(cab.Id, cab);
         }
 
         public Cab GetCab(string cabId)
         {
-            if (!_cabs.ContainsKey(cabId))
+            if (!Cabs.ContainsKey(cabId))
             {
                 throw new CustomException("NO_CAB_FOUND", 400);
             }
 
-            return _cabs[cabId];
+            return Cabs[cabId];
         }
 
         public void UpdateCabLocation(string cabId, Location location)
         {
-            if (!_cabs.ContainsKey(cabId))
+            if (!Cabs.ContainsKey(cabId))
             {
                 throw new CustomException("NO_CAB_FOUND", 400);
             }
 
-            _cabs[cabId].CurrentLocation = location;
+            Cabs[cabId].CurrentLocation = location;
         }
 
         public void UpdateCabAvailability(string cabId, bool isAvailable)
         {
-            if (!_cabs.ContainsKey(cabId))
+            if (!Cabs.ContainsKey(cabId))
             {
                 throw new CustomException("NO_CAB_FOUND", 400);
             }
 
-            _cabs[cabId].IsCabAvailable = isAvailable;
+            Cabs[cabId].IsCabAvailable = isAvailable;
         }
 
         public List<Cab> GetCabs(Location from, double distance)
         {
             var cabsList = new List<Cab>();
 
-            foreach (var eachCab in _cabs.Values)
+            foreach (var eachCab in Cabs.Values)
             {
                 if(eachCab.IsCabAvailable && eachCab.CurrentTrip == null && eachCab.CurrentLocation.GetDistance(from) <= distance)
                     cabsList.Add(eachCab);
