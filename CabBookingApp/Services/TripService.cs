@@ -37,18 +37,17 @@ namespace CabBookingApp.Services
             var matchedCab = _cabMatchStrategy.GetCabMatchForTheRider(rider, closeByCabs, fromPoint, toPoint);
             if (matchedCab == null)
             {
-                //TODO : Exception NOT FOUND
-                throw new Exception(); 
+                throw new CustomException("CABS_NOT_AVAILABLE", 400);
             }
 
             var price = _pricingStrategy.CalculatePrice(fromPoint, toPoint);
             var newTrip = new Trip(matchedCab, rider, price, fromPoint, toPoint);
-            if (!_trips.ContainsKey(rider.GetId()))
+            if (!_trips.ContainsKey(rider.Id))
             {
-                _trips.Add(rider.GetId(), new List<Trip>());
+                _trips.Add(rider.Id, new List<Trip>());
             }
             
-            _trips[rider.GetId()].Add(newTrip);
+            _trips[rider.Id].Add(newTrip);
             matchedCab.CurrentTrip = newTrip;
         }
 

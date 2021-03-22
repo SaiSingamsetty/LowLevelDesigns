@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CabBookingApp.Exceptions;
+﻿using CabBookingApp.Exceptions;
 using CabBookingApp.Models;
+using System.Collections.Generic;
 
 namespace CabBookingApp.Services
 {
     public class CabService
     {
-        private Dictionary<string, Cab> _cabs = new Dictionary<string, Cab>();
+        private readonly Dictionary<string, Cab> _cabs = new Dictionary<string, Cab>();
 
         public void CreateCab(Cab cab)
         {
-            if (_cabs.ContainsKey(cab.GetId()))
+            if (_cabs.ContainsKey(cab.Id))
             {
                 throw new CustomException("CAB_ALREADY_EXISTS", 409);
             }
 
-            _cabs.Add(cab.GetId(), cab);
+            _cabs.Add(cab.Id, cab);
         }
 
         public Cab GetCab(string cabId)
@@ -38,7 +35,7 @@ namespace CabBookingApp.Services
                 throw new CustomException("NO_CAB_FOUND", 400);
             }
 
-            _cabs[cabId].UpdateCabLocation(location);
+            _cabs[cabId].CurrentLocation = location;
         }
 
         public void UpdateCabAvailability(string cabId, bool isAvailable)
@@ -48,7 +45,7 @@ namespace CabBookingApp.Services
                 throw new CustomException("NO_CAB_FOUND", 400);
             }
 
-            _cabs[cabId].UpdateCabAvailability(isAvailable);
+            _cabs[cabId].IsCabAvailable = isAvailable;
         }
 
         public List<Cab> GetCabs(Location from, double distance)

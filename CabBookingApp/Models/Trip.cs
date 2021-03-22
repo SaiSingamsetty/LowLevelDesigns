@@ -7,17 +7,17 @@ namespace CabBookingApp.Models
 {
     public class Trip
     {
-        private Cab Cab { get; set; }
+        public Cab Cab { get; set; }
 
-        private Rider Rider { get; set; }
+        public Rider Rider { get; set; }
 
-        private TripStatus TripStatus { get; set; }
+        public TripStatus TripStatus { get; set; }
 
-        private double Price { get; set; }
+        public double Price { get; set; }
 
-        private Location FromLocation { get; set; }
+        public Location FromLocation { get; set; }
 
-        private Location ToLocation { get; set; }
+        public Location ToLocation { get; set; }
 
         public Trip(Cab cab, Rider rider, double price, Location from, Location to)
         {

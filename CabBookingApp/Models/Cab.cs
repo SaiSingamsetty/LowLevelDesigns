@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CabBookingApp.Models
 {
     public class Cab
     {
-        private string Id { get; set; }
+        public string Id { get; private set; }
 
         private string Driver { get; set; }
 
@@ -16,21 +13,6 @@ namespace CabBookingApp.Models
         public Location CurrentLocation { get; set; }
 
         public Trip CurrentTrip { get; set; }
-
-        public string GetId()
-        {
-            return Id;
-        }
-
-        public void UpdateCabAvailability(bool isAvailable)
-        {
-            IsCabAvailable = isAvailable;
-        }
-
-        public void UpdateCabLocation(Location newLocation)
-        {
-            CurrentLocation = newLocation;
-        }
         
         public Cab(string driver)
         {

@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CabBookingApp.Services;
+using CabBookingApp.Strategies;
 
 namespace CabBookingApp
 {
@@ -25,6 +27,13 @@ namespace CabBookingApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<TripService>();
+            services.AddScoped<CabService>();
+            services.AddScoped<RiderService>();
+
+            services.AddScoped<ICabMatchStrategy, DefaultCabMatchStrategy>();
+            services.AddScoped<IPricingStrategy, DefaultPricingStrategy>();
+
             services.AddControllers();
         }
 

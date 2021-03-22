@@ -13,12 +13,12 @@ namespace CabBookingApp.Services
 
         public void CreateRider(Rider rider)
         {
-            if (_riders.ContainsKey(rider.GetId()))
+            if (_riders.ContainsKey(rider.Id))
             {
                 throw new CustomException("SAME_RIDER_EXISTS", 409);
             }
 
-            _riders.Add(rider.GetId(), rider);
+            _riders.Add(rider.Id, rider);
         }
 
         public Rider GetRider(string riderId)
