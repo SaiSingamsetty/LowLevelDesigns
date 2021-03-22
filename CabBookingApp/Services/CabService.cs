@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CabBookingApp.Exceptions;
 using CabBookingApp.Models;
 
 namespace CabBookingApp.Services
@@ -14,7 +15,7 @@ namespace CabBookingApp.Services
         {
             if (_cabs.ContainsKey(cab.GetId()))
             {
-                //TODO: Already exists exception
+                throw new CustomException("CAB_ALREADY_EXISTS", 409);
             }
 
             _cabs.Add(cab.GetId(), cab);
@@ -24,7 +25,7 @@ namespace CabBookingApp.Services
         {
             if (!_cabs.ContainsKey(cabId))
             {
-                //TODO: NoCabException
+                throw new CustomException("NO_CAB_FOUND", 400);
             }
 
             return _cabs[cabId];
@@ -34,7 +35,7 @@ namespace CabBookingApp.Services
         {
             if (!_cabs.ContainsKey(cabId))
             {
-                //TODO: NoCabException
+                throw new CustomException("NO_CAB_FOUND", 400);
             }
 
             _cabs[cabId].UpdateCabLocation(location);
@@ -44,7 +45,7 @@ namespace CabBookingApp.Services
         {
             if (!_cabs.ContainsKey(cabId))
             {
-                //TODO: NoCabException
+                throw new CustomException("NO_CAB_FOUND", 400);
             }
 
             _cabs[cabId].UpdateCabAvailability(isAvailable);

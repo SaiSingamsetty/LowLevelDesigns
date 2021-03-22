@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CabBookingApp.Exceptions;
 using CabBookingApp.Models;
 
 namespace CabBookingApp.Services
@@ -12,10 +13,9 @@ namespace CabBookingApp.Services
 
         public void CreateRider(Rider rider)
         {
-            //TODO: Exception if same rider exists
             if (_riders.ContainsKey(rider.GetId()))
             {
-
+                throw new CustomException("SAME_RIDER_EXISTS", 409);
             }
 
             _riders.Add(rider.GetId(), rider);
@@ -23,10 +23,9 @@ namespace CabBookingApp.Services
 
         public Rider GetRider(string riderId)
         {
-            //TODO: Exception if Rider with ID does not exist
             if (!_riders.ContainsKey(riderId))
             {
-
+                throw new CustomException("RIDER_NOT_FOUND", 400);
             }
 
             return _riders[riderId];

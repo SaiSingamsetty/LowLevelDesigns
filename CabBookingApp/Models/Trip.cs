@@ -21,7 +21,6 @@ namespace CabBookingApp.Models
 
         public Trip(Cab cab, Rider rider, double price, Location from, Location to)
         {
-            Id = Guid.NewGuid().ToString();
             Cab = cab;
             Rider = rider;
             TripStatus = TripStatus.InProgress;

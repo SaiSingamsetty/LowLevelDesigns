@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CabBookingApp.Exceptions;
 using CabBookingApp.Models;
 using CabBookingApp.Strategies;
 
@@ -60,8 +61,7 @@ namespace CabBookingApp.Services
         {
             if (cab.CurrentTrip == null)
             {
-                //TODO: Trip not found exception
-                throw new Exception();
+                throw new CustomException("TRIP_NOT_FOUND", 400);
             }
 
             cab.CurrentTrip.FinishTrip();
