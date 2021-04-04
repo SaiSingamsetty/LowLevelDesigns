@@ -9,5 +9,7 @@ namespace CricketScoreBoard.Interfaces
     public interface IMatchService
     {
         Match CreateMatch(int noOfPlayers, int noOfOvers);
+
+        void StartInnings(List<string> playersOrder);
     }
 }

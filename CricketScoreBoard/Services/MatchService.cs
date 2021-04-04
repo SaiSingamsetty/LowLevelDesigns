@@ -28,41 +28,88 @@ namespace CricketScoreBoard.Services
             {
                 NoOfOvers = noOfOvers,
                 NoOfPlayers = noOfPlayers,
-                MatchId = Guid.NewGuid(),
+                MatchStatus = MatchStatus.YetToStart
             };
 
             return _repository.Match;
         }
 
-        public void SetBattingOrder(List<string> playerNames)
+        public void StartInnings(List<string> playersOrder)
         {
-            if (_repository.Match != null)
+            if (_repository.Match.HomeTeamInnings == null)
             {
-                _repository.MatchData = new MatchData {MatchReference = _repository.Match.MatchId};
-
-                if (_repository.MatchData.HomeTeam != null)
+                _repository.Match.HomeTeamInnings = new Innings()
                 {
-                    _repository.MatchData.HomeTeam = new ScoreCard()
+                    BattingStatistics = playersOrder.Select(x=> new BattingStats()
                     {
-                        BattingCard = new List<PlayerBattingData>()
-                    };
-                }
-                else if (_repository.MatchData.OpponentTeam != null)
-                {
-                    _repository.MatchData.OpponentTeam = new ScoreCard()
-                    {
-                        BattingCard = new List<PlayerBattingData>()
-                    };
-                }
-                else
-                {
-                    throw new CustomException(400, "Both the teams are already set");
-                }
+                        PlayerId = x,
+                        Status = PlayerStatus.YetToBat
+                    }).ToList()
+                };
+                _repository.Match.MatchStatus = MatchStatus.InProgress;
             }
-            
-
+            else if(_repository.Match.OpponentTeamInnings == null)
+            {
+                _repository.Match.OpponentTeamInnings = new Innings()
+                {
+                    BattingStatistics = playersOrder.Select(x => new BattingStats()
+                    {
+                        PlayerId = x,
+                        Status = PlayerStatus.YetToBat
+                    }).ToList()
+                };
+                _repository.Match.MatchStatus = MatchStatus.InProgress;
+            }
+            else
+            {
+                throw new CustomException("Both the innings are started.");
+            }
         }
 
+        public void AddOverDataToActiveInnings(List<string> runsOfOver)
+        {
+            if (!_repository.Match.HomeTeamInnings.IsInningsCompleted)
+            {
+                AddOver(_repository.Match.HomeTeamInnings, runsOfOver);
+            }
+            else if (!_repository.Match.OpponentTeamInnings.IsInningsCompleted)
+            {
+                AddOver(_repository.Match.OpponentTeamInnings, runsOfOver);
+            }
+        }
+
+        private void AddOver(Innings activeInnings, List<string> overData)
+        {
+            foreach (var eachBall in overData)
+            {
+                activeInnings.BallsPlayed++;
+
+                if (eachBall == "1" || eachBall == "3")
+                {
+                    
+                }
+                else if (eachBall == "2")
+                {
+
+                }
+                else if (eachBall == "4")
+                {
+
+                }
+                else if (eachBall == "6")
+                {
+
+                }
+                else if (eachBall == "W")
+                {
+
+                }
+                else if(eachBall == "Wd")
+                {
+                    
+                }
+            }
+        }
 
     }
 }
