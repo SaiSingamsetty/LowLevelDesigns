@@ -29,7 +29,8 @@ namespace CricketScoreBoard.Controllers
         [HttpPost("over")]
         public ActionResult AddOverDataToInnings([FromBody] List<string> runsInTheOver)
         {
-
+            var card =  _matchService.AddOverDataToActiveInnings(runsInTheOver);
+            return Ok(card);
         }
 
     }

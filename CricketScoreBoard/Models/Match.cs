@@ -26,6 +26,8 @@ namespace CricketScoreBoard.Models
 
         public int TotalScore { get; set; }
 
+        public int WicketsDown { get; set; }
+
         public int Extras { get; set; }
 
         public bool IsInningsCompleted { get; set; }
@@ -35,9 +37,9 @@ namespace CricketScoreBoard.Models
     {
         public string PlayerId { get; set; }
 
-        public bool IsOnCrease { get; set; }
+        //public bool IsOnNonStrikingEnd { get; set; }
 
-        public bool IsOnStrike { get; set; }
+        //public bool IsOnStrikingEnd { get; set; }
 
         public PlayerStatus Status { get; set; }
         
@@ -53,7 +55,8 @@ namespace CricketScoreBoard.Models
     public enum PlayerStatus
     {
         YetToBat,
-        Batting,
+        OnStrikeEnd,
+        OnNonStrikeEnd,
         Out,
         RetiredHurt
     }

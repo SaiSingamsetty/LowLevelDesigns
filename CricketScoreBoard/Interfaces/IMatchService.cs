@@ -11,5 +11,7 @@ namespace CricketScoreBoard.Interfaces
         Match CreateMatch(int noOfPlayers, int noOfOvers);
 
         void StartInnings(List<string> playersOrder);
+
+        ScoreCard AddOverDataToActiveInnings(List<string> runsOfOver);
     }
 }
